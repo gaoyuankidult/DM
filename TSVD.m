@@ -17,7 +17,7 @@ s_points = linspace(s_start_pt,s_start_end,N_s)';
 % Construct measurement. The vector s contains the linear coordinates
 % of the Radon transform in pixel coordinates.
 
-f_m = Exam_fun(t_points);
+f_m = foo_fun(t_points);
 
 % Conbstruct forward map
 
@@ -102,5 +102,26 @@ for i = ivec
     drawnow
 end
 
+% This procedure evaluates the objective form 
+%
+%      f(x) = 1 for 0 <= t <= 1 else f(x) = 0 
+%
+% Arguments:
+% x         Evaluation point
+%
+% Returns:
+% result_array 		value of the discrepancy function at point x
+%
 
+function result_array = foo_fun(t)
+    result_array = arrayfun(@compare,t);
+end 
+
+function result = compare(t_ele)
+    if 0 <= t_ele && t_ele <= 1
+        result = 1;
+    else
+        result = 0;
+    end 
+end 
 
